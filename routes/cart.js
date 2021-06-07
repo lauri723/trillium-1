@@ -11,9 +11,12 @@ const Artwork = require('../models/artwork');
 
 router.get('/view', function (req, res, next) {
     const artworks = req.session.cart;
+    let subTotal = 0;
+    artworks.forEach(artwork => subTotal += artwork.price);
     res.render('cart', {
         artworks: artworks,
-        cart: req.session.cart
+        cart: req.session.cart,
+        subTotal
         // title: "Shopping Cart"
     });
 });

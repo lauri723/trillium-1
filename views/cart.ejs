@@ -5,8 +5,6 @@
         <div class="card-body">
             <h1 class="text-center mb-4">Checkout</h1>
             <hr>
-            <% let totalItems = 0; %>
-            <% let subTotal = 0; %>
             <% if(artworks){%>
             <!-- <div class="row cart-line-item"> -->
             <table>
@@ -64,8 +62,6 @@
                                 </svg></a>
                         </td>
                     </tr>
-                    <% totalItems += artwork.qty %>
-                    <% subTotal += artwork.price %>
                     <% }; %>
                 </tbody>
             </table>
@@ -82,7 +78,7 @@
                         <div class="totals">
                             <table>
                                 <thead>
-                                    <th>Total Items: <%= totalItems %></th>
+                                    <th>Total Items: <%= cartCounter %></th>
                                 </thead>
                                 <tbody>
                                     <tr class="subtotal">
