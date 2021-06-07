@@ -1,5 +1,8 @@
+let secure = false;
 if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
+} else {
+    secure = true;
 }
 
 const express = require('express');
@@ -75,7 +78,7 @@ const sessionConfig = {
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
-        // secure: true,
+        secure,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
@@ -139,7 +142,7 @@ app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
-    res.locals.cartCounter = req.session.cart.length;
+    res.locals.cartCounter = req.session.cart ? req.session.cart.length : 0;
     next();
 })
 
