@@ -51,7 +51,7 @@
                                 </svg></a>
                         </td> -->
                         <td class="cart-price-subtotal">
-                            $<%= (artwork.price * artwork.qty).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
+                            $<%= (artwork.price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
                         </td>
                         <td class="cart-trash">
                             <a href="/cart/update/<%= artwork.id %>?action=clear"><svg
@@ -65,7 +65,7 @@
                         </td>
                     </tr>
                     <% totalItems += artwork.qty %>
-                    <% subTotal += artwork.price * artwork.qty %>
+                    <% subTotal += artwork.price %>
                     <% }; %>
                 </tbody>
             </table>
