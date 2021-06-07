@@ -1,0 +1,430 @@
+<% layout('layouts/boilerplate')%>
+
+<% if(!currentUser){ %>
+    <div class="text-center mt-5">
+        <h1>Must be Admin to Enter this Area</h1>
+        <a class="btn btn-success" href="/">Return to Allowed Area</a>
+    </div>
+    <% } else {%>
+
+<a id="topOfPage" href=""></a>
+<%- include('./partials/adminNavbar')%>
+<div class="container text-center">
+    <div class="row my-5 py-5">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card">
+                <div class="card-body admin-card-body">
+                    <h3 class="card-title admin-card-title">Artwork</h3>
+                    <p class="card-text">
+                    <ul class="list-group m-auto">
+                        <a href="#newArtwork" class="card-link admin-card-link">Add Artwork</a>
+                        <a href="#editArtwork" class="card-link admin-card-link">Edit Artwork</a>
+                        <a href="#deleteArtwork" class="card-link admin-card-link">Delete Artwork</a>
+                    </ul>
+                    </p>
+                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card">
+                <div class="card-body admin-card-body">
+                    <h3 class="card-title admin-card-title">Collections</h3>
+                    <p class="card-text">
+                    <ul class="list-group m-auto">
+                        <a href="/collections/new" class="card-link admin-card-link">Add Collection</a>
+                        <a href="#editCollection" class="card-link admin-card-link">Edit Collection</a>
+                        <a href="#deleteCollection" class="card-link admin-card-link">Delete Collection</a>
+                    </ul>
+                    </p>
+                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card">
+                <div class="card-body admin-card-body">
+                    <h3 class="card-title admin-card-title">Pages</h3>
+                    <p class="card-text">
+                    <ul class="list-group m-auto">
+                        <a href="/leaves/new" class="card-link admin-card-link">Add Page</a>
+                        <a href="#editLeaf" class="card-link admin-card-link">Edit Page</a>
+                        <a href="#deleteLeaf" class="card-link admin-card-link">Delete Page</a>
+                    </ul>
+                    </p>
+                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card">
+                <div class="card-body admin-card-body">
+                    <h3 class="card-title admin-card-title">Students</h3>
+                    <p class="card-text">
+                    <ul class="list-group m-auto">
+                        <a href="/students/new" class="card-link admin-card-link">Add Student</a>
+                        <a href="#editStudent" class="card-link admin-card-link">Edit Student</a>
+                        <a href="#deleteStudent" class="card-link admin-card-link">Delete Student</a>
+                    </ul>
+                    </p>
+                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+<hr>
+<hr>
+
+<a id="newArtwork" href=""></a>
+<section class="my-5 py-5">
+    <div class="container">
+        <h2 class="mb-5 ms-5">Add Artwork to Collection</h2>
+        <div class="collection-cards">
+            <% collections.forEach((collection, i) => {  %>
+            <div class="card-group">
+                <div class="card m-4">
+                    <div class="card-img-top">
+                        <img class="img-fluid img-cat" src="<%=collections[i].images[0].url%>" alt="" srcset="">
+                    </div>
+                    <div class="card-title">
+                        <h5 class="mb-0 mt-4">
+                            <%=collections[i].title%>
+                        </h5>
+                    </div>
+                    <div class="card-footer">
+                        <a class="card-link btn btn-sm btn-success"
+                            href="/collections/<%=collection.slug %>#addArtwork">Add
+                            Artwork</a>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+</section>
+<div class="ms-5 ps-5">
+    <a class="btn btn-sm btn-info px-4" href="#topOfPage">Back to Top</a>
+</div>
+
+<hr>
+<hr>
+<hr>
+
+<a id="editArtwork" href=""></a>
+<section class="my-5 py-5 text-center">
+    <div class="container">
+        <h2 class="mb-5 ms-5 text-start">Edit Artwork</h2>
+        <% collections.forEach((collection, i) => {  %>
+        <button type="button" class="btn btn-light pb-5 mx-4" data-bs-toggle="modal"
+            data-bs-target="#editArtworkModal-<%= collections[i]._id %>-1"
+            data-bs-whatever="<%= collections[i].title %>-1">
+            <div>
+                <img class="img-fluid" src="<%=collections[i].images[0].url%>" alt="" srcset="">
+            </div>
+            <div class="text-start mt-2">
+                <%=collections[i].title%>
+            </div>
+        </button>
+        <div class="modal fade" id="editArtworkModal-<%= collections[i]._id %>-1" tabindex="-1"
+            aria-labelledby="editArtworkModalLabel-<%= collections[i]._id %>-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editArtworkModalLabel-<%= collections[i]._id %>-1">
+                            <%= collections[i].title %></h5>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            aria-label="Close">Close</button>
+                        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                    </div>
+                    <% collections[i].artworks.forEach((artwork, j) => {  %>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div>
+                                <img class="img-fluid" src="<%=artworks[j].photos[0].url%>" width="200">
+                            </div>
+                            <div>
+                                <%= artworks[j].title %>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-sm btn-primary px-4" href="/artworks/<%=artwork._id%>/edit">Edit</a>
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+</section>
+<div class="ms-5 ps-5">
+    <a class="btn btn-sm btn-info px-4" href="#topOfPage">Back to Top</a>
+</div>
+
+<hr>
+<hr>
+<hr>
+
+<a id="deleteArtwork" href=""></a>
+<section class="my-5 py-5 text-center">
+    <div class="container">
+        <h2 class="mb-5 ms-5 text-start">Delete Artwork</h2>
+        <% collections.forEach((collection, i) => {  %>
+        <button type="button" class="btn btn-light pb-5 mx-4" data-bs-toggle="modal"
+            data-bs-target="#deleteArtworkModal-<%= collections[i]._id %>-2"
+            data-bs-whatever="<%= collections[i].title %>-2">
+            <div>
+                <img class="img-fluid" src="<%=collections[i].images[0].url%>" alt="" srcset="">
+            </div>
+            <div class="text-start mt-2">
+                <%=collections[i].title%>
+            </div>
+        </button>
+        <div class="modal fade" id="deleteArtworkModal-<%= collections[i]._id %>-2" tabindex="-1"
+            aria-labelledby="deleteArtworkModalLabel-<%= collections[i]._id %>-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteArtworkModalLabel-<%= collections[i]._id %>-2">
+                            <%= collections[i].title %></h5>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            aria-label="Close">Close</button>
+                    </div>
+                    <% collections[i].artworks.forEach((artwork, j) => {  %>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div>
+                                <img class="img-fluid" src="<%=artworks[j].photos[0].url%>" width="200">
+                            </div>
+                            <div>
+                                <%= artworks[j].title %>
+                            </div>
+                            <div class="modal-footer">
+                                <form class="d-inline"
+                                    action="/collections/<%=collection._id%>/artworks/<%=artwork._id%>/?_method=DELETE"
+                                    method="POST">
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+</section>
+<div class="ms-5 ps-5">
+    <a class="btn btn-sm btn-info px-4" href="#topOfPage">Back to Top</a>
+</div>
+
+<hr>
+<hr>
+<hr>
+
+<a id="editCollection" href=""></a>
+<section class="my-5 py-5">
+    <div class="container">
+        <h2 class="mb-5 ms-5">Edit Collection</h2>
+        <div class="collection-cards m-4">
+            <% collections.forEach((collection, i) => {  %>
+            <div class="card-group">
+                <div class="card m-4">
+                    <div class="card-img-top">
+                        <img class="img-fluid img-cat" src="<%=collections[i].images[0].url%>" alt="" srcset="">
+                    </div>
+                    <div class="card-title">
+                        <h5 class="mb-0 mt-4">
+                            <%=collections[i].title%>
+                        </h5>
+                    </div>
+                    <div class="card-footer">
+                        <a class="card-link btn btn-sm btn-primary" href="/collections/<%=collection._id%>/edit">Edit</a>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+</section>
+<div class="ms-5 ps-5">
+    <a class="btn btn-sm btn-info px-4" href="#topOfPage">Back to Top</a>
+</div>
+
+<hr>
+<hr>
+<hr>
+
+<a id="deleteCollection" href=""></a>
+<section class="my-5 py-5">
+    <div class="container">
+        <h2 class="mb-5 ms-5">Delete Collection</h2>
+        <div class="collection-cards m-4">
+            <% collections.forEach((collection, i) => {  %>
+            <div class="card-group">
+                <div class="card m-4">
+                    <div class="card-img-top">
+                        <img class="img-fluid img-cat" src="<%=collections[i].images[0].url%>" alt="" srcset="">
+                    </div>
+                    <div class="card-title">
+                        <h5 class="mb-0 mt-4">
+                            <%=collections[i].title%>
+                        </h5>
+                    </div>
+                    <div class="card-footer">
+                        <form class="d-inline" action="/collections/<%=collection._id%>?_method=DELETE" method="POST">
+                            <button class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+</section>
+<div class="ms-5 ps-5">
+    <a class="btn btn-sm btn-info px-4" href="#topOfPage">Back to Top</a>
+</div>
+
+<hr>
+<hr>
+<hr>
+
+<a id="editLeaf" href=""></a>
+<section class="my-5 py-5">
+    <div class="container">
+        <h2 class="mb-5 ms-5">Edit Page</h2>
+        <div class="collection-cards m-4">
+            <% leaves.forEach((leaf, i) => {  %>
+            <div class="card-group">
+                <div class="card m-4">
+                    <div class="card-title">
+                        <h5 class="mb-0 mt-4 leaf-edit-delete text-center">
+                            <%=leaves[i].title%>
+                        </h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><%= leaf.notice%></h6>
+                    </div>
+                    <div class="card-footer">
+                        <a class="card-link btn btn-sm btn-primary" href="/leaves/<%=leaf._id%>/edit">Edit</a>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+</section>
+<div class="ms-5 ps-5">
+    <a class="btn btn-sm btn-info px-4" href="#topOfPage">Back to Top</a>
+</div>
+
+<hr>
+<hr>
+<hr>
+
+<a id="deleteLeaf" href=""></a>
+<section class="my-5 py-5">
+    <div class="container">
+        <h2 class="mb-5 ms-5">Delete Page</h2>
+        <div class="collection-cards m-4">
+            <% leaves.forEach((leaf, i) => {  %>
+            <% if (leaf.title != "Announcements-1" && leaf.title != "Announcements-2") { %>
+            <div class="card-group">
+                <div class="card m-4">
+                    <div class="card-title">
+                        <h5 class="mb-0 mt-4 leaf-edit-delete text-center">
+                            <%=leaves[i].title%>
+                        </h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><%= leaf.notice%></h6>
+                    </div>
+                    <div class="card-footer">
+                        <form class="d-inline" action="/leaves/<%=leaf._id%>?_method=DELETE" method="POST">
+                            <button class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+            <% }) %>
+        </div>
+    </div>
+</section>
+<div class="ms-5 ps-5">
+    <a class="btn btn-sm btn-info px-4" href="#topOfPage">Back to Top</a>
+</div>
+</div>
+
+<hr>
+<hr>
+<hr>
+
+<a id="editStudent" href=""></a>
+<section class="my-5 py-5">
+    <div class="container">
+        <h2 class="mb-5 ms-5">Edit Student</h2>
+        <div class="collection-cards m-4">
+            <% students.forEach((student, i) => {  %>
+            <div class="card-group">
+                <div class="card mb-3 mb-md-5">
+                    <div class="card-img-top">
+                        <img class="img-fluid img-cat" src="<%=students[i].images[0].url%>" alt="" srcset="">
+                    </div>
+                    <div class="card-title">
+                        <h5 class="mb-0 mt-4">
+                            <%=students[i].name%>
+                        </h5>
+                    </div>
+                    <div class="card-footer">
+                        <a class="card-link btn btn-sm btn-primary" href="/students/<%=student._id%>/edit">Edit</a>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+</section>
+<div class="ms-5 ps-5">
+    <a class="btn btn-sm btn-info px-4" href="#topOfPage">Back to Top</a>
+</div>
+
+<hr>
+<hr>
+<hr>
+
+<a id="deleteStudent" href=""></a>
+<section class="my-5 py-5">
+    <div class="container">
+        <h2 class="mb-5 ms-5">Delete Student</h2>
+        <div class="collection-cards m-4">
+            <% students.forEach((student, i) => {  %>
+            <div class="card-group">
+                <div class="card mb-3 mb-md-5">
+                    <div class="card-img-top">
+                        <img class="img-fluid img-cat" src="<%=students[i].images[0].url%>" alt="" srcset="">
+                    </div>
+                    <div class="card-title">
+                        <h5 class="mb-0 mt-4">
+                            <%=students[i].name%>
+                        </h5>
+                    </div>
+                    <div class="card-footer">
+                        <form class="d-inline" action="/students/<%=student._id%>?_method=DELETE" method="POST">
+                            <button class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+</section>
+<div class="ms-5 ps-5">
+    <a class="btn btn-sm btn-info px-4" href="#topOfPage">Back to Top</a>
+</div>
+
+<% } %>

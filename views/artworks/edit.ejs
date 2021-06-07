@@ -1,0 +1,116 @@
+<% layout('layouts/boilerplate')%>
+<%- include('../partials/adminNavbar')%>
+
+<div class="container">
+    <div class="row">
+        <h1 class="text-center">Edit Artwork</h1>
+        <div class="col-md-6 offset-md-3">
+            <form action="/artworks/<%=artwork._id%>?_method=PUT" method="POST" novalidate class="validated-form"
+                enctype="multipart/form-data">
+
+                <div class="mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="artwork[title]"
+                        value="<%= artwork.title %>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="notation">Notation</label>
+                    <input class="form-control" type="text" id="notation" name="artwork[notation]"
+                        value="<%= artwork.notation %>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="description">Artwork Text</label>
+                    <textarea class="form-control" type="text" id="description" name="artwork[description]" cols="30"
+                        rows="3" value="<%= artwork.description %>" required><%= artwork.description %></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="size">Size</label>
+                    <input class="form-control" type="text" id="size" name="artwork[size]"
+                        value="<%= artwork.size %>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="medium">Medium</label>
+                    <input class="form-control" type="text" id="medium" name="artwork[medium]"
+                        value="<%= artwork.medium %>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="orderKey">Order Key</label>
+                    <input class="form-control" type="text" id="orderKey" name="artwork[orderKey]"
+                        value="<%= artwork.orderKey %>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="tags">Tags</label>
+                    <input class="form-control" type="text" id="tags" name="artwork[tags]" value="<%= artwork.tags %>"
+                        required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="price">Artwork Price</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="price-label">$</span>
+                        <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="price"
+                            aria-describedby="price-label" name="artwork[price]" value="<%= artwork.price %>" required>
+                    </div>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="photo">Image - May choose multiple images</label>
+                    <div class="form-control">
+                        <input type="file" class="form-file-input" id="photo" name="photo" multiple>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-8 text-center ml-5">
+                        <div class="mb-3">
+                            <% artwork.photos.forEach(function(photo, i) {  %>
+                            <img src="<%=photo.thumbnail %>" class="img-thumbnail mb-2" alt="">
+                            <div class="form-check-inline mb-3">
+                                <input type="checkbox" id="photo-<%=i%>" name="deletePhotos[]"
+                                    value="<%=photo.filename%>">
+                            </div>
+                            <label for="photo-<%=i%>" class="mr-3">Delete?</label>
+                            <% })%>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3 text-center">
+                    <button class="btn btn-primary px-5">Update Artwork</button>
+                    <a class="btn btn-success px-5" href="/admin">Back to Admin</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

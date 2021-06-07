@@ -1,0 +1,159 @@
+<% layout('layouts/boilerplate')%>
+
+<%- include('../partials/navbar')%>
+<%- include('../partials/logo')%>
+
+<div class="container">
+
+    <div class="container">
+        <div class="mt-5">
+            <%- include('../partials/searchBar')%>
+        </div>
+        <div>
+            <%- include('../partials/collectionNavbar')%>
+        </div>
+    </div>
+    
+
+    <!-- <div class="text-center">
+        <% if(currentUser){ %>
+        <a class="btn btn-small btn-info px-5 mb-5" href="#addArtwork">ADddArtwork to <%= collection.title %></a>
+        <% } %>
+    </div> -->
+
+
+    <!-- ========================================================= -->
+    <!-- ========================================================= -->
+    <div class="artwork-cards mb-3 mb-md-5">
+        <% for(let artwork of collection.artworks) { %>
+        <div class="card-group">
+            <div class="card m-4" style="width: 18rem;">
+                <div class="card-img-top">
+                    <%if(artwork.photos.length) {%>
+                    <a href="/collections/<%=collection.slug%>/artworks/<%=artwork.slug%>/show">
+                        <img class="img-fluid img-prod" alt="" src="<%=artwork.photos[0].url%>">
+                        <% } %>
+                    </a>
+                </div>
+                <div class="card-footer px-2">
+                    <a class="artwork-title" href="/collections/<%=collection.slug%>/artworks/<%=artwork.slug%>/show">
+                        <h5 class="mb-0 mt-4"><%=artwork.title%></h5>
+                    </a>
+                    <h6 class="card-subtitle text-muted mb-0"><%= artwork.notation %></h6>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    </div>
+
+    <%- include('../partials/pagination')%>
+
+
+    <!-- ========================================================= -->
+    <!-- ========================================================= -->
+
+
+
+    <a id="addArtwork" href=""></a>
+    <% if(currentUser){ %>
+    <!-- <h3 class="text-center mt-5 mb-3">Add a Artwork</h3> -->
+    <div class="row">
+        <!-- <div class="card card-form mt-5 p-1 p-md-5"> -->
+        <div class="col-md-6 offset-md-3 mt-5 pt-5">
+            <!-- <div class="card-body"> -->
+
+            <form action="/collections/<%=collection._id%>/artworks" method="POST" novalidate class="mb-3 validated-form"
+                enctype="multipart/form-data">
+
+                <div class="mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="artwork[title]" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="notation">Notation</label>
+                    <input class="form-control" type="text" id="notation" name="artwork[notation]" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" name="artwork[description]" id="body" cols="30" rows="3"
+                        required></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="size">Size</label>
+                    <input class="form-control" type="text" id="size" name="artwork[size]" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="medium">Medium</label>
+                    <input class="form-control" type="text" id="medium" name="artwork[medium]" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="orderKey">Order Key</label>
+                    <input class="form-control" type="text" id="orderKey" name="artwork[orderKey]" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="tags">Tags</label>
+                    <input class="form-control" type="text" id="tags" name="artwork[tags]" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="price">Price</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="price-label">$</span>
+                        <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="price"
+                            aria-describedby="price-label" name="artwork[price]" required>
+                    </div>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="photo">Image - Choose single image</label>
+                    <div class="form-control">
+                        <input type="file" class="form-file-input" id="photo" name="photo" multiple>
+                    </div>
+                </div>
+
+                <!-- <div class="mb-3 pb-5 mt-3">
+                    <button class="btn btn-success px-5">Submit</button>
+                </div> -->
+
+                <div class="mb-3 text-center">
+                    <button class="btn btn-primary px-5">Add Artwork</button>
+                    <a class="btn btn-success px-5" href="/admin">Back to Admin</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <% } %>
+</div>
+
+<%- include('../partials/footer')%>

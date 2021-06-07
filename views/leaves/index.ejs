@@ -1,0 +1,48 @@
+<% layout('layouts/boilerplate')%>
+
+<%- include('../partials/navbar')%>
+<%- include('../partials/logo')%>
+
+<div class="container">
+
+    <div class="container leaf-index">
+
+        <h1 class="text-center mb-5">All Pages</h1>
+        <div class="leaf-cards">
+            <% for (let leaf of leaves){%>
+            <div class="card-group">
+                <!-- <div class="card mb-3 mb-md-5" style="max-width: 12rem;"> -->
+                <!-- <div class="card mb-3 mb-md-5"> -->
+                <%if(leaf.images.length) {%>
+                <div class="card-img-top">
+                    <a href="/leaves/<%= leaf.slug %>">
+                        <img class="img-fluid img-cat" alt="" src="<%=leaf.images[0].url%>">
+                        <% } %>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <a class="leaf-title" href="/leaves/<%=leaf.slug%>">
+                            <h5 class="mb-0"><%=leaf.title%></h5>
+                        </a>
+                        <h6 class="text-muted mb-0"><%= leaf.notice %></h6>
+                    </div>
+                    <% if (leaf.title == "Announcements") { %>
+                    <p><%-leaf.content%></p>
+                    <% } %>
+                </div>
+                <div class="card-footer second-footer text-center px-2">
+                    <%  if( currentUser && leaf.author.equals(currentUser._id))  {%>
+                    <a class="card-link btn btn-sm btn-primary" href="/leaves/<%=leaf._id%>/edit">Edit</a>
+                    <form class="d-inline" action="/leaves/<%=leaf._id%>?_method=DELETE" method="POST">
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                    <% } %>
+                </div>
+                <!-- </div> -->
+                <% }%>
+            </div>
+        </div>
+    </div>
+</div>
+

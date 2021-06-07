@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Accept a card payment</title>
+    <meta name="description" content="A demo of a card payment on Stripe" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+    href="https://fonts.googleapis.com/css2?family=Krub:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap"
+    rel="stylesheet">
+
+    <link rel="stylesheet" href="/stylesheets/global.css" />
+    <link rel="stylesheet" href="/stylesheets/cart.css" />
+    <link rel="stylesheet" href="/stylesheets/variables.css" />
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script>
+      var items = <%- JSON.stringify(items) %>;
+      var purchase = {
+        items
+      };
+      var STRIPE_PUBLIC_KEY = '<%= stripePublicKey %>';
+    </script>
+    <script src="/javascripts/client.js" defer></script>
+  </head>
+
+  <body style="background: linear-gradient(to right, var(--color-background-one), var(--color-background-two), #fff);">
+    <div class="container container-cart-checkout">
+      <div class="card-cart m-3">
+        <div class="card-body">
+          <h1 class="text-center mb-4">Checkout</h1>
+          <hr>
+          <% let totalItems = 0; %>
+          <% let subTotal = 0; %>
+          <div>
+            <table class="checkout-table">
+              <tbody>
+                <% items.forEach(item => { %>
+                <tr class="text-end cart-line-item">
+                  <td class="cart-item-title"><%= item.title %></td>
+                  <!-- <td class="text-muted cart-price">
+                    $<%= item.price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>&nbsp;
+                    &nbsp;</td> -->
+                  <!-- <td class="cart-qty">
+                    &nbsp;<%= item.qty %>&nbsp;
+                  </td> -->
+                  <td class="cart-price-subtotal">
+                    $<%= (item.price * item.qty).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
+                  </td>
+                </tr>
+                <% totalItems += item.qty %>
+                <% subTotal += item.price * item.qty %>
+                <% }); %>
+                <tr class=" checkout-total text-end">
+                  <td class="checkout-amount">TOTAL</td>
+                  <td class="checkout-amount"><div id="total"></div></td>
+                </tr>
+                
+              </tbody>
+            </table>
+            <!-- <table class="checkout-table">
+              <tbody>
+                <tr class=" checkout-total text-end">
+                  <td class="checkout-amount">TOTAL</td>
+                  <td class="checkout-amount"><div id="total"></div></td>
+                </tr>
+              </tbody>
+            </table> -->
+          </div>
+        </div>
+        <div class="cart-btn text-center mt-3">
+          <a href="/cart/view" class="btn btn-sm btn-success px-4">BACK TO CART</a>
+      </div>
+      </div>
+    </div>
+  
+    
+    <!-- Display a payment form -->
+    <div>
+      <form id="payment-form">
+        <input type="text" id="email" placeholder="Email address" />
+        <div id="card-element"><!--Stripe.js injects the Card Element--></div>
+        <button id="submit">
+          <div class="spinner hidden" id="spinner"></div>
+          <span id="button-text">Pay now</span>
+        </button>
+        <p id="card-error" role="alert"></p>
+        <p class="result-message hidden">
+          Payment succeeded, see the result in your
+          <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
+        </p>
+      </form>
+    </div>
+    
+  </body>
+</html>
+
+   

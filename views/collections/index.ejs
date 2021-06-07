@@ -1,0 +1,47 @@
+<% layout('layouts/boilerplate')%>
+
+<%- include('../partials/navbar')%>
+<%- include('../partials/logo')%>
+
+<div class="container">
+
+    <div class="container">
+        <div class="mt-5">
+            <%- include('../partials/searchBar')%>
+        </div>
+        <div>
+            <%- include('../partials/collectionNavbar')%>
+        </div>
+    </div>
+    
+
+    <div class="container collection-index">
+
+        <h2 class="text-center mb-5">Collections</h2>
+        <div class="collection-cards m-4">
+            <% for (let collection of collections){%>
+            <div class="card-group">
+                <div class="card m-4" style="max-width: 14rem;">
+                    <%if(collection.images.length) {%>
+                    <div class="card-img-top">
+                        <a href="/collections/<%= collection.slug %>">
+                            <img class="img-fluid img-cat" alt="" src="<%=collection.images[0].url%>">
+                            <% } %>
+                        </a>
+                    </div>
+                    <div class="card-footer px-2">
+                        <div>
+                            <a class="collection-title" href="/collections/<%=collection.slug%>">
+                                <h4 class="mb-0 mt-4"><%=collection.title%></h4>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% }%>
+        </div>
+
+    </div>
+</div>
+
+<%- include('../partials/footer')%>

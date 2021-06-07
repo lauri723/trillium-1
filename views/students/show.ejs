@@ -1,0 +1,31 @@
+<% layout('layouts/boilerplate')%>
+
+<%- include('../partials/navbar')%>
+<%- include('../partials/logo')%>
+
+<div class="container"></div>
+
+<div class="artwork-cards mb-3 mb-md-5">
+    <div class="card-group">
+        <div class="card m-4" style="width: 18rem;">
+            <div class="card-img-top">
+                <%if(student.images.length) {%>
+                <img class="img-fluid img-stu" alt="" src="<%=student.images[0].url%>">
+                <% } %>
+            </div>
+            <div class="card-body">
+                <h3 class="card-"> <%= student.name %></h3>
+            </div>
+            <div class="card-footer text-center">
+                <a class="btn btn-success" href="<%= student.url %>">Gallery</a>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-center">
+    <a class="btn btn-success px-5 mb-5" href="/students%>">All Students</a>
+</div>
+</div>
+
+<%- include('../partials/footer')%>

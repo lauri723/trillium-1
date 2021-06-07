@@ -1,0 +1,76 @@
+<% layout('layouts/boilerplate')%>
+
+<%- include('../partials/navbar')%>
+<%- include('../partials/logo')%>
+
+<div class="container">
+
+    <div class="container">
+        <div class="mt-5">
+            <%- include('../partials/searchBar')%>
+        </div>
+        <div>
+            <%- include('../partials/collectionNavbar')%>
+        </div>
+    </div>
+    
+
+<!-- </div> -->
+
+    <div class="row mx-md-5">
+        <div class="col-md-7 mb-3 mb-md-5">
+            <div id="carousel" class="carousel slide img-car" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <% artwork.photos.forEach((photo, i) => {  %>
+                    <div class="carousel-item <%= i === 0 ? 'active' : ''%>" data-bs-interval="3000">
+                        <img src="<%= photo.url%>" class="d-block w-100" alt="">
+                    </div>
+                    <% }) %>
+                </div>
+                <% if(artwork.photos.length > 1) {%>
+                <a class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </a>
+                <a class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </a>
+                <% } %>
+            </div>
+        </div>
+
+        <div class="col-md-5 mb-3 mb-md-5">
+            <div class="card p-3">
+                <div class="card-body">
+                    <h3 class="card-title"> <%= artwork.title %></h3>
+                    <h6 class="card-subtitle mb-2 text-muted"><%= artwork.notation %></h6>
+                    <hr>
+                    <h5 class="card-text price mb-3">
+                        $<%= artwork.price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
+                    </h5>
+                    <a class="btn btn-sm btn-info px-5" href="/cart/add/<%= artwork.slug %>">Add to Cart</a>
+                </div>
+                <div class="card-body">
+                    <p class="card-text description"><span class="desc">DESCRIPTION: </span><%- artwork.description %></p>
+                    <hr>
+                    <p class="card-text size"><span class="mat">SIZE: </span><%= artwork.size %></p>
+                    <p class="card-text medium"><span class="mat">MEDIUM: </span><%= artwork.medium %></p>
+                    <hr>
+                    <p class="card-text tags">#<%= artwork.tags %></p>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-sm btn-success px-5" href="/collections/<%=collection_id%>">Back to Collection</a>
+                </div>
+                <div class="card-footer second-footer text-center">
+                    <%  if( currentUser && artwork.author.equals(currentUser._id))  {%>
+                    <a class="btn btn-sm btn-primary px-4" href="/artworks/<%=artwork._id%>/edit">Edit</a>
+                    <form class="d-inline" action="/artworks/<%=artwork._id%>/?_method=DELETE" method="POST">
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                    <% } %>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer')%>

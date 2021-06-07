@@ -1,0 +1,44 @@
+<% layout('layouts/boilerplate')%>
+
+<%- include('../partials/navbar')%>
+<%- include('../partials/logo')%>
+
+<div class="container">
+
+    <div class="container">
+        <div class="mt-5">
+            <%- include('../partials/searchBar')%>
+        </div>
+        <div>
+            <%- include('../partials/collectionNavbar')%>
+        </div>
+    </div>
+    
+
+    <div class="artwork-cards mb-3 mb-md-5">
+        <% for(let artwork of artworks) { %>
+        <div class="card-group">
+            <div class="card m-4" style="max-width: 18rem;">
+                <div class="card-img-top">
+                    <%if(artwork.photos.length) {%>
+                    <a href="/artworks/<%=artwork.slug%>/show">
+                        <img class="img-fluid img-prod" alt="" src="<%=artwork.photos[0].url%>">
+                        <% } %>
+                    </a>
+                </div>
+                <div class="card-footer px-2">
+                    <a class="artwork-title" href="/artworks/<%=artwork.slug%>/show">
+                        <h5 class="mb-0 mt-4"><%=artwork.title%></h5>
+                    </a>
+                    <h6 class="card-subtitle text-muted mb-0"><%= artwork.notation %></h6>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    </div>
+
+    <%- include('../partials/pagination')%>
+
+</div>
+
+<%- include('../partials/footer')%>

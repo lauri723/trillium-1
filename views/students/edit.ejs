@@ -1,0 +1,60 @@
+<% layout('layouts/boilerplate')%>
+<%- include('../partials/adminNavbar')%>
+
+<div class="container">
+    <div class="row">
+        <h1 class="text-center">Edit Student</h1>
+        <div class="col-md-6 offset-md-3">
+            <form action="/students/<%=student._id%>?_method=PUT" method="POST" novalidate class="validated-form"
+                enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label" for="name">Name</label>
+                    <input class="form-control" type="text" id="name" name="student[name]"
+                        value="<%=student.name %>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="url">name</label>
+                    <input class="form-control" type="text" id="url" name="student[url]"
+                        value="<%=student.url %>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="orderKey">Order Key</label>
+                    <input class="form-control" type="text" id="orderKey" name="student[orderKey]"
+                        value="<%=student.orderKey %>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="image">Image - May change single image</label>
+                    <div class="form-control">
+                        <input type="file" class="form-file-input" id="image" name="image" multiple>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <% student.images.forEach(function(img, i) {  %>
+                    <img src="<%=img.thumbnail %>" class="img-thumbnail" alt="">
+                    <div class="form-check-inline">
+                        <input type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%=img.filename%>">
+                    </div>
+                    <label for="image-<%=i%>">Delete?</label>
+                    <% })%>
+                </div>
+                <div class="mb-3 text-center">
+                    <button class="btn btn-primary px-5">Update Student</button>
+                    <a class="btn btn-success px-5" href="/admin">Back to Admin</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
