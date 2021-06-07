@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
 
 router.get('/admin', async (req, res) => {
     const collection = await Collection.findOne({ slug: req.params.slug })
-    const collections = await Collection.find({}).sort({ createdAt: 'desc' })
+    const collections = await Collection.find({}).sort({ createdAt: 'desc' }).populate('artworks')
     const artworks = await Artwork.find({})
     const artwork = await Artwork.findOne({ slug: req.params.slug })
     const leaves = await Leaf.find({}).sort({ createdAt: 'desc' })

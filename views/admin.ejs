@@ -118,36 +118,36 @@
 <section class="my-5 py-5 text-center">
     <div class="container">
         <h2 class="mb-5 ms-5 text-start">Edit Artwork</h2>
-        <% collections.forEach((collection, i) => {  %>
+        <% collections.forEach((collection) => {  %>
         <button type="button" class="btn btn-light pb-5 mx-4" data-bs-toggle="modal"
-            data-bs-target="#editArtworkModal-<%= collections[i]._id %>-1"
-            data-bs-whatever="<%= collections[i].title %>-1">
+            data-bs-target="#editArtworkModal-<%= collection._id %>-1"
+            data-bs-whatever="<%= collection.title %>-1">
             <div>
-                <img class="img-fluid" src="<%=collections[i].images[0].url%>" alt="" srcset="">
+                <img class="img-fluid" src="<%=collection.images[0].url%>" alt="" srcset="">
             </div>
             <div class="text-start mt-2">
-                <%=collections[i].title%>
+                <%=collection.title%>
             </div>
         </button>
-        <div class="modal fade" id="editArtworkModal-<%= collections[i]._id %>-1" tabindex="-1"
-            aria-labelledby="editArtworkModalLabel-<%= collections[i]._id %>-1" aria-hidden="true">
+        <div class="modal fade" id="editArtworkModal-<%= collection._id %>-1" tabindex="-1"
+            aria-labelledby="editArtworkModalLabel-<%= collection._id %>-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editArtworkModalLabel-<%= collections[i]._id %>-1">
-                            <%= collections[i].title %></h5>
+                        <h5 class="modal-title" id="editArtworkModalLabel-<%= collection._id %>-1">
+                            <%= collection.title %></h5>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                             aria-label="Close">Close</button>
                         <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                     </div>
-                    <% collections[i].artworks.forEach((artwork, j) => {  %>
+                    <% collection.artworks.forEach((artwork) => {  %>
                     <div class="modal-body">
                         <div class="container-fluid">
                             <div>
-                                <img class="img-fluid" src="<%=artworks[j].photos[0].url%>" width="200">
+                                <img class="img-fluid" src="<%=artwork.photos[0].url%>" width="200">
                             </div>
                             <div>
-                                <%= artworks[j].title %>
+                                <%= artwork.title %>
                             </div>
                             <div class="modal-footer">
                                 <a class="btn btn-sm btn-primary px-4" href="/artworks/<%=artwork._id%>/edit">Edit</a>
