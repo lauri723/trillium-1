@@ -105,6 +105,21 @@
                     </div>
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label" for="available">Available</label>
+                    <input class="" type="checkbox" id="available" name="artwork[available]"
+                        value="<%= artwork.available %>" <%= artwork.available ? 'checked' : '' %>>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <script>
+                    const available = document.getElementById('available');
+                    available.addEventListener('change', function(e) {
+                        this.value = this.checked
+                    })
+                </script>
+
                 <div class="mb-3 text-center">
                     <button class="btn btn-primary px-5">Update Artwork</button>
                     <a class="btn btn-success px-5" href="/admin">Back to Admin</a>

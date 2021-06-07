@@ -42,6 +42,7 @@ module.exports.artworkSchema = Joi.object({
         notation: Joi.string().required().escapeHTML(),
         orderKey: Joi.number().required().min(0),
         price: Joi.number().required().min(0),
+        available: Joi.boolean().truthy('yes').falsy('no')
     }).required(),
     deletePhotos: Joi.array()
 })

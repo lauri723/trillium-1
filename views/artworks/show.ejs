@@ -44,10 +44,14 @@
                     <h3 class="card-title"> <%= artwork.title %></h3>
                     <h6 class="card-subtitle mb-2 text-muted"><%= artwork.notation %></h6>
                     <hr>
+                    <% if(artwork.available) { %>
                     <h5 class="card-text price mb-3">
                         $<%= artwork.price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
                     </h5>
                     <a class="btn btn-sm btn-info px-5" href="/cart/add/<%= artwork.slug %>">Add to Cart</a>
+                    <% } else { %>
+                        Item unavailable
+                    <% } %>
                 </div>
                 <div class="card-body">
                     <p class="card-text description"><span class="desc">DESCRIPTION: </span><%- artwork.description %></p>

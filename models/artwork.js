@@ -38,7 +38,8 @@ const ArtworkSchema = new Schema({
         type: String,
         required: true,
         unique: true
-      },   
+      },
+    available: { type: Boolean, default: true }
 }, opts);
 
 ArtworkSchema.pre('validate', function(next) {

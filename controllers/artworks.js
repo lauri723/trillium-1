@@ -91,6 +91,7 @@ module.exports.renderEditForm = async (req, res) => {
 
 module.exports.updateArtwork = async (req, res) => {
     const { id, artworkId } = req.params;
+    req.body.artwork.available = req.body.artwork.available || false; 
     const artwork = await Artwork.findByIdAndUpdate(artworkId, { ...req.body.artwork });
     const photos = req.files.map(f => ({ url: f.path, filename: f.filename }));
     artwork.photos.push(...photos);
