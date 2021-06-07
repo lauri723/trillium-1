@@ -45,9 +45,7 @@ router.get('/add/:artwork', catchAsync(async function (req, res) {
                 return item.id == artwork._id;
             });
     
-            if (item) {
-                item.qty++;
-            } else {
+            if (!item) {
                 req.session.cart.push({
                     id: artwork._id,
                     title: artwork.title,
@@ -55,6 +53,8 @@ router.get('/add/:artwork', catchAsync(async function (req, res) {
                     price: artwork.price,
                     photos: artwork.photos  //(req.files.map(f => ({ url: f.path, filename: f.filename })))
                 });
+            } else {
+                req.flash('success', 'Artwork can only be added to the cart one time.');
             }
         }
         res.redirect('/cart/view')
